@@ -1,0 +1,36 @@
+#############################################################
+# CHOOSE YOUR ARCHITECTURE
+#############################################################
+ARCH=32
+#ARCH=64
+
+#############################################################
+# OPTIONS
+#############################################################
+UTIL=cspice
+CPP=g++
+CFLAGS=-w -I. -I$(UTIL)
+LFLAGS=-lm $(UTIL)/cspice$(ARCH).a $(UTIL)/csupport$(ARCH).a
+
+#############################################################
+# RULES
+#############################################################
+clean:
+	@echo "Cleaning..."
+	@find . -name "*~" -exec rm -rf {} \;
+	@find . -name "*.pyc" -exec rm -rf {} \;
+	@find . -name "*.o" -exec rm -rf {} \;
+
+%.out:%.o
+	$(CPP) $(LFLAGS) $^ -o $@
+
+%.o:%.cpp
+	$(CPP) -c $(CFLAGS) $^ -o $@
+
+commit:
+	@echo "Commiting..."
+	@git commit -am "Commit"
+
+pull:
+	@git reset --hard HEAD
+	@git pull
