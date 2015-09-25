@@ -21,7 +21,18 @@ int aQuest(void)
   return 0;
 }
 
-int whatTimeIsIt(SpiceChar* date,SpiceChar* outsys,double *t)
+/*
+  Function: Calculate the time at a given date.
+
+  Parameters:
+
+     date: Date for conversion
+     outsys: Time system where it should be returned
+ */
+int whatTimeIsIt(SpiceChar* date,double *t,SpiceChar* outsys="ET")
 {
-  
+  SpiceDouble et;
+  str2et_c(date,&et);
+  *t=unitim_c(et,"ET",outsys);
+  return 0;
 }
